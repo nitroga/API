@@ -2,20 +2,29 @@
 using System.Text.Json;
 using System.Net;
 
-RestClient pokeClient = new("https://pokeapi.co/api/v2/");
-RestRequest request = new("pokemon/ditto");
-RestResponse response = pokeClient.GetAsync(request).Result;
+Console.WriteLine("Choose category (string)\nCategoriess:\nPeople\nPlanets\nFilms\nStarships\n");
+string category = Console.ReadLine().ToLower();
 
-Pokemon p = JsonSerializer.Deserialize<Pokemon>(response.Content);
+Console.WriteLine("Input request (number)");
+string count = Console.ReadLine();
+
+Console.Clear();
+
+Console.WriteLine($"Request: {category}/{count}\n");
+
+RestClient client = new("https://swapi.py4e.com/api/");
+RestRequest request = new($"{category}/{count}");
+RestResponse response = client.GetAsync(request).Result;
+
+SWAPI sw = JsonSerializer.Deserialize<SWAPI>(response.Content);
 
 if (response.StatusCode == HttpStatusCode.OK) {
-    Console.WriteLine(p.name);
-    Console.WriteLine(p.weight);
-    Console.WriteLine(p.is_default);
+    Console.WriteLine(response.Content);
+    Console.WriteLine(sw.name);
 }
 
 else {
-    Console.WriteLine("Error: Pokemon probably not found");
+    Console.WriteLine("404 Error: Item not found");
 }
 
 Console.ReadLine();
