@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Net;
 
-Console.WriteLine("Choose category (string)\nCategoriess:\nPeople\nPlanets\nFilms\nStarships\n");
+Console.WriteLine("Choose category (string)\nCategories:\nPeople\nPlanets\nFilms\nStarships\n");
 string category = Console.ReadLine().ToLower();
 
 Console.WriteLine("Input request (number)");
@@ -19,8 +19,8 @@ RestResponse response = client.GetAsync(request).Result;
 SWAPI sw = JsonSerializer.Deserialize<SWAPI>(response.Content);
 
 if (response.StatusCode == HttpStatusCode.OK) {
-    Console.WriteLine(response.Content);
     Console.WriteLine(sw.name);
+    Console.WriteLine(sw.title);
 }
 
 else {
